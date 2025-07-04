@@ -75,12 +75,36 @@ func CheckVersion(version string) (bool, string, error) {
 	}
 }
 
+//func caclVersionNumber(version string) int {
+//	version = version[1:]
+//	versionSplit := strings.Split(version, ".")
+//	versionNumber := Atoi(versionSplit[0])*10000 + Atoi(versionSplit[1])*100 + Atoi(versionSplit[2])
+//	return versionNumber
+//}
 func caclVersionNumber(version string) int {
-	version = version[1:]
-	versionSplit := strings.Split(version, ".")
-	versionNumber := Atoi(versionSplit[0])*10000 + Atoi(versionSplit[1])*100 + Atoi(versionSplit[2])
-	return versionNumber
+    // 检查 version 是否为空
+    if len(version) == 0 {
+        panic("Version string is empty")
+    }
+
+    // 确保 version 以 'v' 开头
+    if version[0] == 'v' {
+        version = version[1:]  // 去掉 'v'
+    } else {
+        panic("Version string does not start with 'v'")
+    }
+
+    // 按 '.' 分割版本号
+    versionSplit := strings.Split(version, ".")
+    if len(versionSplit) < 3 {
+        panic("Invalid version format")
+    }
+
+    // 将分割后的各个部分转换为整数并计算版本号
+    versionNumber := Atoi(versionSplit[0])*10000 + Atoi(versionSplit[1])*100 + Atoi(versionSplit[2])
+    return versionNumber
 }
+
 
 func Atoi(s string) int {
 	i, err := strconv.Atoi(s)
@@ -92,3 +116,4 @@ func reqErr(err error) (bool, string, error) {
 	log.Errorln("获取最新版本失败 (Failed to get the latest version) : ", err)
 	return false, "", err
 }
+
