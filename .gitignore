@@ -24,6 +24,6 @@ build
 go.work
 .DS_Store
 .idea
-cf
+#cf
 cf.bak
 cf.exe.bak
